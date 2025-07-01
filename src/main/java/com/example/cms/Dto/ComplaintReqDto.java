@@ -12,7 +12,7 @@ public class ComplaintReqDto {
     private ComplaintStatus status;
     private LocalDateTime raisedOn;
     private LocalDateTime resolvedOn;
-    private String duration;
+    private long resolutionTime;
 
     public ComplaintReqDto() {
     }
@@ -24,7 +24,7 @@ public class ComplaintReqDto {
         this.status = status;
         this.raisedOn = raisedOn;
         this.resolvedOn = resolvedOn;
-        this.duration = duration;
+       // this.duration = duration;
     }
 
     public Long getComplaintId() {
@@ -75,11 +75,11 @@ public class ComplaintReqDto {
         this.resolvedOn = resolvedOn;
     }
 
-    public String getDuration() {
-        return duration;
+    public long getResolutionTime() {
+        return resolutionTime;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setResolutionTime(long resolutionTime) {
+        this.resolutionTime = resolutionTime;
     }
 }

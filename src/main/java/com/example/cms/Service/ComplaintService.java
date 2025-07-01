@@ -7,8 +7,8 @@ import com.example.cms.Repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,10 +25,8 @@ public class ComplaintService {
         return toDto(complaintRepository.save(complaint));
     }
 
-    public List<ComplaintReqDto> getAllComplaints() {
-        return complaintRepository.findAll().stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+    public List<Complaint> getAllComplaints() {
+        return complaintRepository.findAll();
     }
 
     public ComplaintReqDto updateStatus(Long id, ComplaintStatus newStatus) {
@@ -45,7 +43,14 @@ public class ComplaintService {
         } else if (currentStatus == ComplaintStatus.IN_PROGRESS || newStatus == ComplaintStatus.RESOLVED) {
             complaint.setStatus(newStatus);
             complaint.setResolvedOn(LocalDateTime.now());
-        } else {
+        }else if(newStatus==ComplaintStatus.RESOLVED)
+        {
+            LocalDateTime resolvedDate=LocalDateTime.now();
+            complaint.setResolvedOn(resolvedDate);
+            long durationvar= ChronoUnit.DAYS.between(resolvedDate,complaint.getRaisedOn());
+            complaint.setResolutionTime(durationvar);
+        }
+        else {
             throw new IllegalStateException("Invalid status transition.");
         }
 
@@ -65,17 +70,17 @@ public class ComplaintService {
         dto.setStatus(complaint.getStatus());
         dto.setRaisedOn(complaint.getRaisedOn());
         dto.setResolvedOn(complaint.getResolvedOn());
-        Duration duration = complaint.getDuration();
-        dto.setDuration(duration != null ? formatDuration(duration) : null);
+       // Duration duration = complaint.getDuration();
+     //   dto.setDuration(duration != null ? formatDuration(duration) : null);
         return dto;
     }
 
-    private String formatDuration(Duration duration) {
-        long hours = duration.toHours();
-        long minutes = duration.toMinutesPart();
-        long seconds = duration.toSecondsPart();
-        return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
-    }
+//    private String formatDuration(Duration duration) {
+//        long hours = duration.toHours();
+//        long minutes = duration.toMinutesPart();
+//        long seconds = duration.toSecondsPart();
+//        return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
+//    }
 }
 
 

@@ -19,13 +19,14 @@ public class Complaint {
 
     private LocalDateTime raisedOn;
     private LocalDateTime resolvedOn;
+    private long resolutionTime;
 
-    public Duration getDuration() {
-        if (raisedOn != null && resolvedOn != null) {
-            return Duration.between(raisedOn, resolvedOn);
-        }
-        return null;
-    }
+//    public Duration getDuration() {
+//        if (raisedOn != null && resolvedOn != null) {
+//            return Duration.between(raisedOn, resolvedOn);
+//        }
+//        return null;
+//    }
 
     public Complaint() {
     }
@@ -85,5 +86,13 @@ public class Complaint {
 
     public void setResolvedOn(LocalDateTime resolvedOn) {
         this.resolvedOn = resolvedOn;
+    }
+
+    public long getResolutionTime() {
+        return resolutionTime;
+    }
+
+    public void setResolutionTime(long resolutionTime) {
+        this.resolutionTime = resolutionTime;
     }
 }

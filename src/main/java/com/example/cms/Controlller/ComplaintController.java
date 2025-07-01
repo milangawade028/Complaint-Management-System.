@@ -5,6 +5,7 @@ import com.example.cms.Dto.ComplaintReqDto;
 import com.example.cms.Entity.Complaint;
 import com.example.cms.Service.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,9 @@ public class ComplaintController {
     }
 
     @GetMapping("/complaints")
-    public ResponseEntity<List<ComplaintReqDto>> getAllComplaints() {
-        return ResponseEntity.ok(complaintService.getAllComplaints());
+    public ResponseEntity<List<Complaint>> getAllComplaints() {
+        //return ResponseEntity.ok(complaintService.getAllComplaints());
+        return new ResponseEntity<>(complaintService.getAllComplaints(), HttpStatus.FOUND);
     }
 
     @PutMapping("/{id}/status")
