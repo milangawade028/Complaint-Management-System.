@@ -40,9 +40,9 @@ public class ComplaintService {
             throw new IllegalStateException("Cannot change status of a resolved complaint.");
         }
 
-        if (currentStatus == ComplaintStatus.OPEN && newStatus == ComplaintStatus.IN_PROGRESS) {
+        if (currentStatus == ComplaintStatus.OPEN || newStatus == ComplaintStatus.IN_PROGRESS) {
             complaint.setStatus(newStatus);
-        } else if (currentStatus == ComplaintStatus.IN_PROGRESS && newStatus == ComplaintStatus.RESOLVED) {
+        } else if (currentStatus == ComplaintStatus.IN_PROGRESS || newStatus == ComplaintStatus.RESOLVED) {
             complaint.setStatus(newStatus);
             complaint.setResolvedOn(LocalDateTime.now());
         } else {
