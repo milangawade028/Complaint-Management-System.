@@ -1,6 +1,6 @@
 package com.example.cms.Controlller;
 
-import com.example.cms.ComplaintStatus;
+import com.example.cms.Entity.ComplaintStatus;
 import com.example.cms.Dto.ComplaintReqDto;
 import com.example.cms.Entity.Complaint;
 import com.example.cms.Service.ComplaintService;
@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 @RestController
+@RequestMapping("/complaint")
 public class ComplaintController {
 
     @Autowired
     private ComplaintService complaintService;
 
     @PostMapping("/Raisecomplaint")
-    public ResponseEntity<ComplaintReqDto> raiseComplaint(@RequestBody Complaint complaint) {
-        return ResponseEntity.ok(complaintService.raiseComplaint(complaint));
+    public ResponseEntity<ComplaintReqDto> raiseComplaint(@RequestBody ComplaintReqDto complaintDto) {
+        return ResponseEntity.ok(complaintService.raiseComplaint(complaintDto));
     }
 
-    @GetMapping("/complaints")
+    @GetMapping("/getAll")
     public ResponseEntity<List<Complaint>> getAllComplaints() {
         //return ResponseEntity.ok(complaintService.getAllComplaints());
         return new ResponseEntity<>(complaintService.getAllComplaints(), HttpStatus.FOUND);

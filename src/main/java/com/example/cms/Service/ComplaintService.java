@@ -1,10 +1,12 @@
 package com.example.cms.Service;
 
-import com.example.cms.ComplaintStatus;
+import com.example.cms.Entity.ComplaintStatus;
 import com.example.cms.Dto.ComplaintReqDto;
 import com.example.cms.Entity.Complaint;
 import com.example.cms.Repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,15 @@ public class ComplaintService {
     @Autowired
     private ComplaintRepository complaintRepository;
 
-    public ComplaintReqDto raiseComplaint(Complaint complaint) {
+    public ComplaintReqDto raiseComplaint(ComplaintReqDto complaintDto) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username= authentication.getName();
+
+        Complaint complaint=new Complaint();
+
+        complaint.setCustomerName(username);
+        complaint.setIssueDescription(complaintDto.getIssueDescription());
         complaint.setStatus(ComplaintStatus.OPEN);
         complaint.setRaisedOn(LocalDateTime.now());
         complaint.setResolvedOn(null);

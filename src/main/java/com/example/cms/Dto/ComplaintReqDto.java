@@ -1,6 +1,6 @@
 package com.example.cms.Dto;
 
-import com.example.cms.ComplaintStatus;
+import com.example.cms.Entity.ComplaintStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
